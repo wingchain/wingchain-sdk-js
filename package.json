@@ -1,0 +1,13 @@
+{
+  "name": "wingchain-sdk",
+  "version": "0.1.0",
+  "description": "Wingchain SDK",
+  "main": "index.js",
+  "scripts": {
+    "build" : "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["Wingchain", "Blockchain", "SDK"],
+  "author": "developer <developer@wingchain.cn>",
+  "license": "Apache-2.0"
+}

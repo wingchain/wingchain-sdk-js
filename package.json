@@ -2,7 +2,7 @@
   "name": "wingchain-sdk",
   "version": "0.1.0",
   "description": "Wingchain SDK",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest --config jestconfig.json",

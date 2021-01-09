@@ -1,5 +1,6 @@
 import {decode, encode, hexToU8a} from "../src/codec";
 import {callSchemaMap} from "../src/schema";
+import {u8aToHex} from "../lib/codec";
 
 test('test balance init params codec', () => {
 
@@ -225,16 +226,15 @@ test('test contract create params codec', () => {
   const data = {
     code: '0x010203',
     init_method: 'foo',
-    init_params: '0x040506',
+    init_params: '{bar:1}',
     init_pay_value: 100,
   };
 
   const encoded = encode(data, callSchemaMap.contract.create.params)
-
-  expect(encoded).toStrictEqual(hexToU8a('0x0c0102030c666f6f0c0405066400000000000000'));
+  expect(encoded).toStrictEqual(hexToU8a('0x0c0102030c666f6f1c7b6261723a317d6400000000000000'));
 
   const decoded = decode(encoded, callSchemaMap.contract.create.params)
-  expect(decoded).toStrictEqual([data, 20]);
+  expect(decoded).toStrictEqual([data, 24]);
 
 });
 
@@ -375,29 +375,29 @@ test('test contract execute params codec', () => {
   const data = {
     contract_address: "0x0102030405060708010203040506070801020304",
     method: 'foo',
-    params: '0x010203',
+    params: '{bar:1}',
     pay_value: 100,
   };
 
   const encoded = encode(data, callSchemaMap.contract.execute.params)
 
-  expect(encoded).toStrictEqual(hexToU8a('0x5001020304050607080102030405060708010203040c666f6f0c0102036400000000000000'));
+  expect(encoded).toStrictEqual(hexToU8a('0x5001020304050607080102030405060708010203040c666f6f1c7b6261723a317d6400000000000000'));
 
   const decoded = decode(encoded, callSchemaMap.contract.execute.params)
-  expect(decoded).toStrictEqual([data, 37]);
+  expect(decoded).toStrictEqual([data, 41]);
 
 });
 
 test('test contract execute result codec', () => {
 
-  const data = '0x010203';
+  const data = '{foo:1}';
 
   const encoded = encode(data, callSchemaMap.contract.execute.result)
 
-  expect(encoded).toStrictEqual(hexToU8a('0x0c010203'));
+  expect(encoded).toStrictEqual(hexToU8a('0x1c7b666f6f3a317d'));
 
   const decoded = decode(encoded, callSchemaMap.contract.execute.result)
-  expect(decoded).toStrictEqual([data, 4]);
+  expect(decoded).toStrictEqual([data, 8]);
 
 });
 

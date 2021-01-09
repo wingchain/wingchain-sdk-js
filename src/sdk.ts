@@ -1,4 +1,4 @@
-import { JsonRpcClient, IJsonRpcClient } from './jsonrpc';
+import { IJsonRpcClient } from './jsonrpc';
 import { callSchemaMap } from './schema';
 import { decode, encode, hexToU8a, u8aToHex } from './codec';
 

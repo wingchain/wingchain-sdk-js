@@ -274,7 +274,11 @@ Example: const scheme = {type: 'hex'}
 function hexEncodeTo(data: any, schema: object, output: number[]) {
   const arr = hexToU8a(data);
   cnEncodeTo(arr.length, { type: 'cn' }, output);
-  output.push(...Array.from(arr));
+  const bufferSize = 1024;
+  for (let i = 0; i < arr.length; i += bufferSize) {
+    const buffer = arr.slice(i, i + bufferSize);
+    output.push(...Array.from(buffer));
+  }
 }
 
 function hexDecodeFrom(data: Uint8Array, schema: object, offset: number): [any, number] {

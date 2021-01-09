@@ -1,4 +1,5 @@
 import {decode, encode, hexToU8a} from "../src/codec";
+import {u8aToHex} from "../lib/codec";
 
 test('test codec unit', async () => {
 
@@ -401,4 +402,16 @@ test('test codec tuple', () => {
     100,
   ], 29]);
   console.log(decoded);
+});
+
+test('test big hex', () => {
+
+  const schema = {type: 'hex'};
+
+  const data = u8aToHex(new Uint8Array(200000));
+
+  const encoded = encode(data, schema);
+
+  expect(encoded.length).toStrictEqual(200004);
+
 });

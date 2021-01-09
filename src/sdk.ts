@@ -81,7 +81,6 @@ class Chain extends Module {
     const schema = moduleMap[params[0].call.method as keyof typeof moduleMap];
     const paramsSchema = schema.params;
     params[0].call.params = u8aToHex(encode(params[0].call.params, paramsSchema));
-    console.log(params[0].call.params);
     const result = await this.call('buildTransaction', ...params);
     return result;
   }

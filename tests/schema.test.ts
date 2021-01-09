@@ -1,0 +1,547 @@
+import {decode, encode, hexToU8a} from "../src/codec";
+import {callSchemaMap} from "../src/schema";
+
+test('test balance init params codec', () => {
+
+  const data = {
+    endow: [["0x0102030405060708010203040506070801020304", 1000], ["0x0102030405060708010203040506070801020305", 2000]],
+  };
+
+  const encoded = encode(data, callSchemaMap.balance.init.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x08500102030405060708010203040506070801020304e803000000000000500102030405060708010203040506070801020305d007000000000000'));
+
+  const decoded = decode(encoded, callSchemaMap.balance.init.params)
+  expect(decoded).toStrictEqual([data, 59]);
+
+});
+
+test('test balance init result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.balance.init.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.balance.init.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test balance transfer params codec', () => {
+
+  const data = {
+    recipient: "0x0102030405060708010203040506070801020304",
+    value: 1000,
+  };
+
+  const encoded = encode(data, callSchemaMap.balance.transfer.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x500102030405060708010203040506070801020304e803000000000000'));
+
+  const decoded = decode(encoded, callSchemaMap.balance.transfer.params)
+  expect(decoded).toStrictEqual([data, 29]);
+
+});
+
+test('test balance transfer result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.balance.transfer.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.balance.transfer.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test contract init params codec', () => {
+
+  const data = {
+    max_stack_height: {Some: 100},
+    initial_memory_pages: {None: null},
+    max_memory_pages: {Some: 200},
+    max_share_value_len: {None: null},
+    max_share_size: {Some: 300},
+    max_nest_depth: {Some: 400},
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.init.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x01640000000001c800000000012c010000000000000190010000'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.init.params)
+  expect(decoded).toStrictEqual([data, 26]);
+
+});
+
+test('test contract init result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.contract.init.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.init.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test contract get_version params codec', () => {
+
+  const data = {
+    contract_address: '0x0102030405060708010203040506070801020304',
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.get_version.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.get_version.params)
+  expect(decoded).toStrictEqual([data, 21]);
+
+});
+
+test('test contract get_version result codec', () => {
+
+  const data = {
+    Some: 100,
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.get_version.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x0164000000'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.get_version.result)
+  expect(decoded).toStrictEqual([data, 5]);
+
+});
+
+test('test contract get_admin params codec', () => {
+
+  const data = {
+    contract_address: '0x0102030405060708010203040506070801020304',
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.get_admin.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.get_admin.params)
+  expect(decoded).toStrictEqual([data, 21]);
+
+});
+
+test('test contract get_admin result codec', () => {
+
+  const data = {
+    Some: {
+      threshold: 2,
+      members: [["0x0102030405060708010203040506070801020304", 2], ["0x0102030405060708010203040506070801020304", 1]],
+    },
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.get_admin.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x0102000000085001020304050607080102030405060708010203040200000050010203040506070801020304050607080102030401000000'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.get_admin.result)
+  expect(decoded).toStrictEqual([data, 56]);
+
+});
+
+test('test contract get_code params codec', () => {
+
+  const data = {
+    contract_address: '0x0102030405060708010203040506070801020304',
+    version: {
+      None: null,
+    }
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.get_code.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x50010203040506070801020304050607080102030400'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.get_code.params)
+  expect(decoded).toStrictEqual([data, 22]);
+
+});
+
+test('test contract get_code result codec', () => {
+
+  const data = {
+    Some: '0x010203',
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.get_code.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x010c010203'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.get_code.result)
+  expect(decoded).toStrictEqual([data, 5]);
+
+});
+
+test('test contract get_code_hash params codec', () => {
+
+  const data = {
+    contract_address: '0x0102030405060708010203040506070801020304',
+    version: {
+      None: null,
+    }
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.get_code_hash.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x50010203040506070801020304050607080102030400'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.get_code_hash.params)
+  expect(decoded).toStrictEqual([data, 22]);
+
+});
+
+test('test contract get_code_hash result codec', () => {
+
+  const data = {
+    Some: '0x010203',
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.get_code_hash.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x010c010203'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.get_code_hash.result)
+  expect(decoded).toStrictEqual([data, 5]);
+
+});
+
+test('test contract create params codec', () => {
+
+  const data = {
+    code: '0x010203',
+    init_method: 'foo',
+    init_params: '0x040506',
+    init_pay_value: 100,
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.create.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x0c0102030c666f6f0c0405066400000000000000'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.create.params)
+  expect(decoded).toStrictEqual([data, 20]);
+
+});
+
+test('test contract create result codec', () => {
+
+  const data = '0x0102030405060708010203040506070801020304';
+
+  const encoded = encode(data, callSchemaMap.contract.create.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.create.result)
+  expect(decoded).toStrictEqual([data, 21]);
+
+});
+
+test('test contract update_admin params codec', () => {
+
+  const data = {
+    contract_address: "0x0102030405060708010203040506070801020304",
+    admin: {
+      threshold: 10,
+      members: [["0x0102030405060708010203040506070801020304", 2], ["0x0102030405060708010203040506070801020304", 1]],
+    },
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.update_admin.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x5001020304050607080102030405060708010203040a000000085001020304050607080102030405060708010203040200000050010203040506070801020304050607080102030401000000'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.update_admin.params)
+  expect(decoded).toStrictEqual([data, 76]);
+
+});
+
+test('test contract update_admin result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.contract.update_admin.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.update_admin.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test contract update_admin_vote params codec', () => {
+
+  const data = {
+    contract_address: "0x0102030405060708010203040506070801020304",
+    proposal_id: 10,
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.update_admin_vote.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x5001020304050607080102030405060708010203040a000000'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.update_admin_vote.params)
+  expect(decoded).toStrictEqual([data, 25]);
+
+});
+
+test('test contract update_admin_vote result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.contract.update_admin_vote.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.update_admin_vote.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test contract update_code params codec', () => {
+
+  const data = {
+    contract_address: "0x0102030405060708010203040506070801020304",
+    code: "0x010203",
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.update_code.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x5001020304050607080102030405060708010203040c010203'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.update_code.params)
+  expect(decoded).toStrictEqual([data, 25]);
+
+});
+
+test('test contract update_code result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.contract.update_code.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.update_code.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test contract update_code_vote params codec', () => {
+
+  const data = {
+    contract_address: "0x0102030405060708010203040506070801020304",
+    proposal_id: 10,
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.update_code_vote.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x5001020304050607080102030405060708010203040a000000'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.update_code_vote.params)
+  expect(decoded).toStrictEqual([data, 25]);
+
+});
+
+test('test contract update_code_vote result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.contract.update_code_vote.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.update_code_vote.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test contract execute params codec', () => {
+
+  const data = {
+    contract_address: "0x0102030405060708010203040506070801020304",
+    method: 'foo',
+    params: '0x010203',
+    pay_value: 100,
+  };
+
+  const encoded = encode(data, callSchemaMap.contract.execute.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x5001020304050607080102030405060708010203040c666f6f0c0102036400000000000000'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.execute.params)
+  expect(decoded).toStrictEqual([data, 37]);
+
+});
+
+test('test contract execute result codec', () => {
+
+  const data = '0x010203';
+
+  const encoded = encode(data, callSchemaMap.contract.execute.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x0c010203'));
+
+  const decoded = decode(encoded, callSchemaMap.contract.execute.result)
+  expect(decoded).toStrictEqual([data, 4]);
+
+});
+
+test('test poa init params codec', () => {
+
+  const data = {
+    block_interval: {Some: 10},
+    authority: "0x0102030405060708010203040506070801020304"
+  };
+
+  const encoded = encode(data, callSchemaMap.poa.init.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x010a00000000000000500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.init.params)
+  expect(decoded).toStrictEqual([data, 30]);
+
+});
+
+test('test poa init result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.poa.init.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.init.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test poa get_meta params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.poa.get_meta.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.get_meta.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test poa get_meta result codec', () => {
+
+  const data = {
+    block_interval: {Some: 10},
+  };;
+
+  const encoded = encode(data, callSchemaMap.poa.get_meta.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x010a00000000000000'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.get_meta.result)
+  expect(decoded).toStrictEqual([data, 9]);
+
+});
+
+test('test poa get_authority params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.poa.get_authority.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.get_authority.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test poa get_authority result codec', () => {
+
+  const data = '0x0102030405060708010203040506070801020304';
+
+  const encoded = encode(data, callSchemaMap.poa.get_authority.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.get_authority.result)
+  expect(decoded).toStrictEqual([data, 21]);
+
+});
+
+test('test system init params codec', () => {
+
+  const data = {
+    chain_id: "chain-abcde",
+    timestamp: 12345678,
+    max_until_gap: 100,
+    max_execution_gap: 8,
+  };
+
+  const encoded = encode(data, callSchemaMap.system.init.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x2c636861696e2d61626364654e61bc0000000000640000000000000008'));
+
+  const decoded = decode(encoded, callSchemaMap.system.init.params)
+  expect(decoded).toStrictEqual([data, 29]);
+
+});
+
+test('test system init result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.system.init.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.system.init.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test system get_meta params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.system.get_meta.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.system.get_meta.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test system get_meta result codec', () => {
+
+  const data = {
+    chain_id: "chain-abcde",
+    timestamp: 12345678,
+    max_until_gap: 100,
+    max_execution_gap: 8,
+  };
+
+  const encoded = encode(data, callSchemaMap.system.get_meta.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x2c636861696e2d61626364654e61bc0000000000640000000000000008'));
+
+  const decoded = decode(encoded, callSchemaMap.system.get_meta.result)
+  expect(decoded).toStrictEqual([data, 29]);
+
+});

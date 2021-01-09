@@ -1,5 +1,4 @@
-import {decode, encode} from "../src/codec";
-import {hexToU8a} from "../lib/types/utils";
+import {decode, encode, hexToU8a} from "../src/codec";
 
 test('test codec unit', async () => {
 

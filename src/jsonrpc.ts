@@ -37,6 +37,9 @@ export class JsonRpcClient implements IJsonRpcClient {
         if (response.data && response.data.error) {
           let msg = 'JSON-RPC call error in ' + method + ': ';
           msg += response.data.error.message + '(' + response.data.error.code + ')';
+          if (response.data.error.data) {
+            msg += ': ' + JSON.stringify(response.data.error.data);
+          }
           throw new Error(msg);
         }
         return response.data.result;
@@ -45,6 +48,9 @@ export class JsonRpcClient implements IJsonRpcClient {
         let msg = 'JSON-RPC call error in ' + method + ': ';
         if (err.response && err.response.data.error) {
           msg += err.response.data.error.message + '(' + err.response.data.error.code + ')';
+          if (err.response.data.error.data) {
+            msg += ': ' + JSON.stringify(err.response.data.error.data);
+          }
         } else if (err.message) {
           msg += err.message;
         } else {

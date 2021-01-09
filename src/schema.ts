@@ -218,7 +218,7 @@ export const callSchemaMap = {
         fields: {
           code: { type: 'hex' },
           init_method: { type: 'str' },
-          init_params: { type: 'hex' },
+          init_params: { type: 'str' },
           init_pay_value: { type: 'u64' },
         },
       },
@@ -276,12 +276,12 @@ export const callSchemaMap = {
         fields: {
           contract_address: { type: 'hex' },
           method: { type: 'str' },
-          params: { type: 'hex' },
+          params: { type: 'str' },
           pay_value: { type: 'u64' },
         },
       },
       result: {
-        type: 'hex',
+        type: 'str',
       },
     },
   },

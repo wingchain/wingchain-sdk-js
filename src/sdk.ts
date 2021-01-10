@@ -52,7 +52,17 @@ class Chain extends Module {
   }
 
   async getReceiptByHash(...params: any) {
-    return this.call('getReceiptByHash', ...params);
+    const options = params.length > 1 ? params.pop() : {};
+    const receipt = await this.call('getReceiptByHash', ...params);
+    if (options.module && options.method) {
+      const moduleMap = callSchemaMap[options.module as keyof typeof callSchemaMap];
+      const schema = moduleMap[options.method as keyof typeof moduleMap];
+      const resultSchema = schema.result;
+      if (receipt.result && receipt.result.Ok) {
+        receipt.result.Ok = decode(hexToU8a(receipt.result.Ok), resultSchema)[0];
+      }
+    }
+    return receipt;
   }
 
   async sendRawTransaction(...params: any) {

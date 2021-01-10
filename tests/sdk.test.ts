@@ -104,7 +104,7 @@ test('test rpc chain getTransactionByHash', async () => {
   });
 });
 
-test('test rpc chain getRawTransactionByHash', async () => {
+test('test rpc chain getRawTransactionByHash system init', async () => {
   const client = new MockJsonRpcClient();
   const sdk = new Sdk(client);
   console.log(await sdk.chain.getRawTransactionByHash('0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817'));
@@ -113,7 +113,25 @@ test('test rpc chain getRawTransactionByHash', async () => {
 test('test rpc chain getReceiptByHash', async () => {
   const client = new MockJsonRpcClient();
   const sdk = new Sdk(client);
-  console.log(await sdk.chain.getReceiptByHash('0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817'));
+  console.log(await sdk.chain.getReceiptByHash('0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817', {
+    module: 'system',
+    method: 'init'
+  }));
+});
+
+test('test rpc chain getReceiptByHash contract execute', async () => {
+  const client = new MockJsonRpcClient();
+  const sdk = new Sdk(client);
+  console.log(await sdk.chain.getReceiptByHash('0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b818', {
+    module: 'contract',
+    method: 'execute',
+  }));
+});
+
+test('test rpc chain getReceiptByHash', async () => {
+  const client = new MockJsonRpcClient();
+  const sdk = new Sdk(client);
+  console.log(await sdk.chain.getReceiptByHash('0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b818'));
 });
 
 test('test rpc chain getTransactionInTxPool', async () => {
@@ -128,8 +146,8 @@ test('test rpc chain executeCall', async () => {
   const params = {
     block_hash: '0x72ac07d1cb007d3f3e54da9464ac749e4d78427b6bb81fe9f7ff75161c9da785',
     call: {
-      module:'system',
-      method:'get_meta',
+      module: 'system',
+      method: 'get_meta',
       params: null,
     }
   };
@@ -146,8 +164,8 @@ test('test rpc chain buildTransaction', async () => {
       100
     ],
     call: {
-      module:'balance',
-      method:'transfer',
+      module: 'balance',
+      method: 'transfer',
       params: {
         recipient: '0x0102030405060708010203040506070801020304',
         value: 100,
@@ -270,12 +288,22 @@ class MockJsonRpcClient implements IJsonRpcClient {
         };
       }
     } else if (method === 'chain_getReceiptByHash') {
-      return {
-        hash:
-          '0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817',
-        block_number: '0x0000000000000000',
-        events: [],
-        result: {Ok: '0x'}
+      if (params[0] === '0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817') {
+        return {
+          hash:
+            '0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817',
+          block_number: '0x0000000000000000',
+          events: [],
+          result: {Ok: '0x'}
+        }
+      } else if (params[0] === '0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b818') {
+        return {
+          hash:
+            '0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817',
+          block_number: '0x0000000000000000',
+          events: [],
+          result: {Ok: '0x106e756c6c'}
+        }
       }
     } else if (method === 'chain_getRawTransactionByHash') {
       return '0x001873797374656d10696e6974843c636861696e2d73686f772d636173656884c0b776010000640000000000000008';
@@ -292,9 +320,9 @@ class MockJsonRpcClient implements IJsonRpcClient {
               '0x3c636861696e2d73686f772d636173656884c0b776010000640000000000000008'
           }
       };
-    } else if(method === 'chain_executeCall') {
+    } else if (method === 'chain_executeCall') {
       return '0x3c636861696e2d73686f772d636173656884c0b776010000640000000000000008';
-    } else if(method === 'chain_buildTransaction') {
+    } else if (method === 'chain_buildTransaction') {
       return '0x01808a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c01018e99198e690304aaf5dccf982607ddd5c49816a9a412b6f2d98c8c3a7463db634c5fdf29489c6552467693a13f2aef2e1ab33d80a99b950c6ec24461086aad0e0000000022210000000000001c62616c616e6365207472616e73666572745001020304050607080102030405060708010203046400000000000000';
     }
   }

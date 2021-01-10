@@ -142,8 +142,8 @@ test('test rpc chain buildTransaction', async () => {
   const params = {
     witness: [
       '0x0101010101010101010101010101010101010101010101010101010101010101',
-      '0',
-      '8482'
+      0,
+      100
     ],
     call: {
       module:'balance',

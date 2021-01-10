@@ -37,6 +37,9 @@ class Chain extends Module {
 
   async getTransactionByHash(...params: any) {
     const tx = await this.call('getTransactionByHash', ...params);
+    if (!(tx && tx.call)) {
+      return tx;
+    }
     const moduleMap = callSchemaMap[tx.call.module as keyof typeof callSchemaMap];
     const schema = moduleMap[tx.call.method as keyof typeof moduleMap];
     const paramsSchema = schema.params;
@@ -58,6 +61,9 @@ class Chain extends Module {
 
   async getTransactionInTxPool(...params: any) {
     const tx = await this.call('getTransactionInTxPool', ...params);
+    if (!(tx && tx.call)) {
+      return tx;
+    }
     const moduleMap = callSchemaMap[tx.call.module as keyof typeof callSchemaMap];
     const schema = moduleMap[tx.call.method as keyof typeof moduleMap];
     const paramsSchema = schema.params;
@@ -66,6 +72,9 @@ class Chain extends Module {
   }
 
   async executeCall(...params: any) {
+    if (!(params.length > 0 && params[0] && params[0].call)) {
+      return null;
+    }
     const moduleMap = callSchemaMap[params[0].call.module as keyof typeof callSchemaMap];
     const schema = moduleMap[params[0].call.method as keyof typeof moduleMap];
     const paramsSchema = schema.params;
@@ -77,6 +86,9 @@ class Chain extends Module {
   }
 
   async buildTransaction(...params: any) {
+    if (!(params.length > 0 && params[0] && params[0].call)) {
+      return null;
+    }
     const moduleMap = callSchemaMap[params[0].call.module as keyof typeof callSchemaMap];
     const schema = moduleMap[params[0].call.method as keyof typeof moduleMap];
     const paramsSchema = schema.params;

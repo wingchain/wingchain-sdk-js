@@ -54,6 +54,9 @@ class Chain extends Module {
   async getReceiptByHash(...params: any) {
     const options = params.length > 1 ? params.pop() : {};
     const receipt = await this.call('getReceiptByHash', ...params);
+    if (!(receipt && receipt.result)) {
+      return receipt;
+    }
     if (options.module && options.method) {
       const moduleMap = callSchemaMap[options.module as keyof typeof callSchemaMap];
       const schema = moduleMap[options.method as keyof typeof moduleMap];

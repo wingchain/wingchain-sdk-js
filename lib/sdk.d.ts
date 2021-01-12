@@ -14,15 +14,18 @@ declare class Chain extends Module {
     getRawTransactionByHash(...params: any): Promise<any>;
     getReceiptByHash(...params: any): Promise<any>;
     sendRawTransaction(...params: any): Promise<any>;
-    getTransactionInTxPool(...params: any): Promise<any>;
     executeCall(...params: any): Promise<any>;
     buildTransaction(...params: any): Promise<any>;
+}
+declare class TxPool extends Module {
+    getTransaction(...params: any): Promise<any>;
 }
 declare class Network extends Module {
     getState(...params: any): Promise<any>;
 }
 export declare class Sdk {
     readonly chain: Chain;
+    readonly txpool: TxPool;
     readonly network: Network;
     constructor(client: IJsonRpcClient);
 }

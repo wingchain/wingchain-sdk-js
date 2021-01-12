@@ -134,12 +134,6 @@ test('test rpc chain getReceiptByHash', async () => {
   console.log(await sdk.chain.getReceiptByHash('0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b818'));
 });
 
-test('test rpc chain getTransactionInTxPool', async () => {
-  const client = new MockJsonRpcClient();
-  const sdk = new Sdk(client);
-  console.log(await sdk.chain.getTransactionInTxPool('0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817'));
-});
-
 test('test rpc chain executeCall', async () => {
   const client = new MockJsonRpcClient();
   const sdk = new Sdk(client);
@@ -173,6 +167,12 @@ test('test rpc chain buildTransaction', async () => {
     }
   };
   console.log(await sdk.chain.buildTransaction(params));
+});
+
+test('test rpc txpool getTransaction', async () => {
+  const client = new MockJsonRpcClient();
+  const sdk = new Sdk(client);
+  console.log(await sdk.txpool.getTransaction('0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817'));
 });
 
 class MockJsonRpcClient implements IJsonRpcClient {
@@ -307,7 +307,7 @@ class MockJsonRpcClient implements IJsonRpcClient {
       }
     } else if (method === 'chain_getRawTransactionByHash') {
       return '0x001873797374656d10696e6974843c636861696e2d73686f772d636173656884c0b776010000640000000000000008';
-    } else if (method === 'chain_getTransactionInTxPool') {
+    } else if (method === 'txpool_getTransaction') {
       return {
         hash:
           '0x5a4776c1e69ae0d55999d5a18dadfa6a19ee788f5e97dee6735424e81010b817',

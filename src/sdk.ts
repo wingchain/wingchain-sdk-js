@@ -69,18 +69,6 @@ class Chain extends Module {
     return this.call('sendRawTransaction', ...params);
   }
 
-  async getTransactionInTxPool(...params: any) {
-    const tx = await this.call('getTransactionInTxPool', ...params);
-    if (!(tx && tx.call)) {
-      return tx;
-    }
-    const moduleMap = callSchemaMap[tx.call.module as keyof typeof callSchemaMap];
-    const schema = moduleMap[tx.call.method as keyof typeof moduleMap];
-    const paramsSchema = schema.params;
-    tx.call.params = decode(hexToU8a(tx.call.params), paramsSchema)[0];
-    return tx;
-  }
-
   async executeCall(...params: any) {
     if (!(params.length > 0 && params[0] && params[0].call)) {
       return null;
@@ -108,6 +96,20 @@ class Chain extends Module {
   }
 }
 
+class TxPool extends Module {
+  async getTransaction(...params: any) {
+    const tx = await this.call('getTransaction', ...params);
+    if (!(tx && tx.call)) {
+      return tx;
+    }
+    const moduleMap = callSchemaMap[tx.call.module as keyof typeof callSchemaMap];
+    const schema = moduleMap[tx.call.method as keyof typeof moduleMap];
+    const paramsSchema = schema.params;
+    tx.call.params = decode(hexToU8a(tx.call.params), paramsSchema)[0];
+    return tx;
+  }
+}
+
 class Network extends Module {
   getState(...params: any) {
     return this.call('getState', ...params);
@@ -116,10 +118,12 @@ class Network extends Module {
 
 export class Sdk {
   readonly chain: Chain;
+  readonly txpool: TxPool;
   readonly network: Network;
 
   constructor(client: IJsonRpcClient) {
     this.chain = new Chain(client, 'chain');
+    this.txpool = new TxPool(client, 'txpool');
     this.network = new Network(client, 'network');
   }
 }

@@ -325,6 +325,19 @@ export const callSchemaMap = {
         type: 'hex',
       },
     },
+    update_authority: {
+      params: {
+        type: 'struct',
+        fields: {
+          authority: {
+            type: 'hex',
+          },
+        },
+      },
+      result: {
+        type: 'unit',
+      },
+    },
   },
   system: {
     init: {

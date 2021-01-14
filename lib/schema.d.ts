@@ -500,6 +500,19 @@ export declare const callSchemaMap: {
                 type: string;
             };
         };
+        update_authority: {
+            params: {
+                type: string;
+                fields: {
+                    authority: {
+                        type: string;
+                    };
+                };
+            };
+            result: {
+                type: string;
+            };
+        };
     };
     system: {
         init: {

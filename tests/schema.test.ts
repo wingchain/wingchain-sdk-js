@@ -484,6 +484,34 @@ test('test poa get_authority result codec', () => {
 
 });
 
+test('test poa update_authority params codec', () => {
+
+  const data = {
+    authority: '0x0102030405060708010203040506070801020304',
+  };
+
+  const encoded = encode(data, callSchemaMap.poa.update_authority.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.update_authority.params)
+  expect(decoded).toStrictEqual([data, 21]);
+
+});
+
+test('test poa update_authority result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.poa.update_authority.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.update_authority.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
 test('test system init params codec', () => {
 
   const data = {

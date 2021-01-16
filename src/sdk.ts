@@ -35,6 +35,14 @@ class Chain extends Module {
     return this.call('getBlockByHash', ...params);
   }
 
+  async getProofByNumber(...params: any) {
+    return this.call('getProofByNumber', ...params);
+  }
+
+  async getProofByHash(...params: any) {
+    return this.call('getProofByHash', ...params);
+  }
+
   async getTransactionByHash(...params: any) {
     const tx = await this.call('getTransactionByHash', ...params);
     if (!(tx && tx.call)) {

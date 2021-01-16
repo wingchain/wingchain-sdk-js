@@ -10,6 +10,8 @@ declare class Chain extends Module {
     getHeaderByHash(...params: any): Promise<any>;
     getBlockByNumber(...params: any): Promise<any>;
     getBlockByHash(...params: any): Promise<any>;
+    getProofByNumber(...params: any): Promise<any>;
+    getProofByHash(...params: any): Promise<any>;
     getTransactionByHash(...params: any): Promise<any>;
     getRawTransactionByHash(...params: any): Promise<any>;
     getReceiptByHash(...params: any): Promise<any>;

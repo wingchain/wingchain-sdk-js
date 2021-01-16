@@ -20,6 +20,12 @@ test('test rpc chain getBlockByNumber', async () => {
   console.log(await sdk.chain.getBlockByNumber('0x00'));
 });
 
+test('test rpc chain getProofByNumber', async () => {
+  const client = new MockJsonRpcClient();
+  const sdk = new Sdk(client);
+  console.log(await sdk.chain.getProofByNumber('confirmed'));
+});
+
 test('test rpc chain getTransactionByHash', async () => {
   const client = new MockJsonRpcClient();
   const sdk = new Sdk(client);
@@ -198,6 +204,12 @@ class MockJsonRpcClient implements IJsonRpcClient {
           '0xa1dcc51f16984dc2bbb2e42796d34f7bdaddd8b705db8f57aa0638d3b5c59e7a',
         payload_execution_receipts_root:
           '0x03170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c111314'
+      };
+    } if (method === 'chain_getProofByNumber') {
+      return {
+        "hash": "0xec18d333dd98f3d1e50deec58dfa8f454a2a46e024f17da68a52987e562a33c9",
+        "name": "poa",
+        "data": "0x808a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c01014172d5c6c634c436b320194a2ce883fa99844729d9a8058492a436587dcc5150e9a79da3128d2079bad9f95709f7780bbedd27f76b6b3b3e446cf84af870720d"
       };
     } else if (method === 'network_getState') {
       return {

@@ -25,10 +25,14 @@ declare class TxPool extends Module {
 declare class Network extends Module {
     getState(...params: any): Promise<any>;
 }
+declare class Consensus extends Module {
+    getState(...params: any): Promise<any>;
+}
 export declare class Sdk {
     readonly chain: Chain;
     readonly txpool: TxPool;
     readonly network: Network;
+    readonly consensus: Consensus;
     constructor(client: IJsonRpcClient);
 }
 export {};

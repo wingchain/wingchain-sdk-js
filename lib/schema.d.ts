@@ -456,6 +456,23 @@ export declare const callSchemaMap: {
                             };
                         };
                     };
+                    admin: {
+                        type: string;
+                        fields: {
+                            threshold: {
+                                type: string;
+                            };
+                            members: {
+                                type: string;
+                                element: {
+                                    type: string;
+                                    elements: {
+                                        type: string;
+                                    }[];
+                                };
+                            };
+                        };
+                    };
                     authority: {
                         type: string;
                     };
@@ -492,9 +509,71 @@ export declare const callSchemaMap: {
                 };
             };
         };
+        get_admin: {
+            params: {
+                type: string;
+            };
+            result: {
+                type: string;
+                fields: {
+                    threshold: {
+                        type: string;
+                    };
+                    members: {
+                        type: string;
+                        element: {
+                            type: string;
+                            elements: {
+                                type: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+        };
         get_authority: {
             params: {
                 type: string;
+            };
+            result: {
+                type: string;
+            };
+        };
+        update_admin: {
+            params: {
+                type: string;
+                fields: {
+                    admin: {
+                        type: string;
+                        fields: {
+                            threshold: {
+                                type: string;
+                            };
+                            members: {
+                                type: string;
+                                element: {
+                                    type: string;
+                                    elements: {
+                                        type: string;
+                                    }[];
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            result: {
+                type: string;
+            };
+        };
+        update_admin_vote: {
+            params: {
+                type: string;
+                fields: {
+                    proposal_id: {
+                        type: string;
+                    };
+                };
             };
             result: {
                 type: string;
@@ -505,6 +584,233 @@ export declare const callSchemaMap: {
                 type: string;
                 fields: {
                     authority: {
+                        type: string;
+                    };
+                };
+            };
+            result: {
+                type: string;
+            };
+        };
+        update_authority_vote: {
+            params: {
+                type: string;
+                fields: {
+                    proposal_id: {
+                        type: string;
+                    };
+                };
+            };
+            result: {
+                type: string;
+            };
+        };
+    };
+    raft: {
+        init: {
+            params: {
+                type: string;
+                fields: {
+                    block_interval: {
+                        type: string;
+                        variants: {
+                            Some: {
+                                index: number;
+                                schema: {
+                                    type: string;
+                                };
+                            };
+                            None: {
+                                index: number;
+                                schema: {
+                                    type: string;
+                                };
+                            };
+                        };
+                    };
+                    heartbeat_interval: {
+                        type: string;
+                    };
+                    election_timeout_min: {
+                        type: string;
+                    };
+                    election_timeout_max: {
+                        type: string;
+                    };
+                    admin: {
+                        type: string;
+                        fields: {
+                            threshold: {
+                                type: string;
+                            };
+                            members: {
+                                type: string;
+                                element: {
+                                    type: string;
+                                    elements: {
+                                        type: string;
+                                    }[];
+                                };
+                            };
+                        };
+                    };
+                    authorities: {
+                        type: string;
+                        fields: {
+                            members: {
+                                type: string;
+                                element: {
+                                    type: string;
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            result: {
+                type: string;
+            };
+        };
+        get_meta: {
+            params: {
+                type: string;
+            };
+            result: {
+                type: string;
+                fields: {
+                    block_interval: {
+                        type: string;
+                        variants: {
+                            Some: {
+                                index: number;
+                                schema: {
+                                    type: string;
+                                };
+                            };
+                            None: {
+                                index: number;
+                                schema: {
+                                    type: string;
+                                };
+                            };
+                        };
+                    };
+                    heartbeat_interval: {
+                        type: string;
+                    };
+                    election_timeout_min: {
+                        type: string;
+                    };
+                    election_timeout_max: {
+                        type: string;
+                    };
+                };
+            };
+        };
+        get_admin: {
+            params: {
+                type: string;
+            };
+            result: {
+                type: string;
+                fields: {
+                    threshold: {
+                        type: string;
+                    };
+                    members: {
+                        type: string;
+                        element: {
+                            type: string;
+                            elements: {
+                                type: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+        };
+        get_authorities: {
+            params: {
+                type: string;
+            };
+            result: {
+                type: string;
+                fields: {
+                    members: {
+                        type: string;
+                        element: {
+                            type: string;
+                        };
+                    };
+                };
+            };
+        };
+        update_admin: {
+            params: {
+                type: string;
+                fields: {
+                    admin: {
+                        type: string;
+                        fields: {
+                            threshold: {
+                                type: string;
+                            };
+                            members: {
+                                type: string;
+                                element: {
+                                    type: string;
+                                    elements: {
+                                        type: string;
+                                    }[];
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            result: {
+                type: string;
+            };
+        };
+        update_admin_vote: {
+            params: {
+                type: string;
+                fields: {
+                    proposal_id: {
+                        type: string;
+                    };
+                };
+            };
+            result: {
+                type: string;
+            };
+        };
+        update_authorities: {
+            params: {
+                type: string;
+                fields: {
+                    authorities: {
+                        type: string;
+                        fields: {
+                            members: {
+                                type: string;
+                                element: {
+                                    type: string;
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            result: {
+                type: string;
+            };
+        };
+        update_authorities_vote: {
+            params: {
+                type: string;
+                fields: {
+                    proposal_id: {
                         type: string;
                     };
                 };

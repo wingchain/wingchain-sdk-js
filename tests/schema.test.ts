@@ -405,15 +405,21 @@ test('test poa init params codec', () => {
 
   const data = {
     block_interval: {Some: 10},
+    admin: {
+      threshold: 1,
+      members: [
+        ["0x0102030405060708010203040506070801020304", 1],
+      ]
+    },
     authority: "0x0102030405060708010203040506070801020304"
   };
 
   const encoded = encode(data, callSchemaMap.poa.init.params)
 
-  expect(encoded).toStrictEqual(hexToU8a('0x010a00000000000000500102030405060708010203040506070801020304'));
+  expect(encoded).toStrictEqual(hexToU8a('0x010a00000000000000010000000450010203040506070801020304050607080102030401000000500102030405060708010203040506070801020304'));
 
   const decoded = decode(encoded, callSchemaMap.poa.init.params)
-  expect(decoded).toStrictEqual([data, 30]);
+  expect(decoded).toStrictEqual([data, 60]);
 
 });
 
@@ -455,6 +461,37 @@ test('test poa get_meta result codec', () => {
 
   const decoded = decode(encoded, callSchemaMap.poa.get_meta.result)
   expect(decoded).toStrictEqual([data, 9]);
+
+});
+
+test('test poa get_admin params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.poa.get_admin.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.get_admin.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test poa get_admin result codec', () => {
+
+  const data = {
+    threshold: 1,
+    members: [
+      ["0x0102030405060708010203040506070801020304", 1],
+    ]
+  };
+
+  const encoded = encode(data, callSchemaMap.poa.get_admin.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('010000000450010203040506070801020304050607080102030401000000'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.get_admin.result)
+  expect(decoded).toStrictEqual([data, 30]);
 
 });
 
@@ -508,6 +545,228 @@ test('test poa update_authority result codec', () => {
   expect(encoded).toStrictEqual(hexToU8a('0x'));
 
   const decoded = decode(encoded, callSchemaMap.poa.update_authority.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test poa update_authority_vote params codec', () => {
+
+  const data = {
+    proposal_id: 100,
+  };
+
+  const encoded = encode(data, callSchemaMap.poa.update_authority_vote.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x64000000'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.update_authority_vote.params)
+  expect(decoded).toStrictEqual([data, 4]);
+
+});
+
+test('test poa update_authority_vote result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.poa.update_authority_vote.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.poa.update_authority_vote.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test raft init params codec', () => {
+
+  const data = {
+    block_interval: {Some: 10},
+    heartbeat_interval: 100,
+    election_timeout_min: 500,
+    election_timeout_max: 1000,
+    admin: {
+      threshold: 1,
+      members: [
+        ["0x0102030405060708010203040506070801020304", 1],
+      ]
+    },
+    authorities: {
+      members: [
+        "0x0102030405060708010203040506070801020304",
+      ],
+    }
+  };
+
+  const encoded = encode(data, callSchemaMap.raft.init.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x010a000000000000006400000000000000f401000000000000e80300000000000001000000045001020304050607080102030405060708010203040100000004500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.init.params)
+  expect(decoded).toStrictEqual([data, 85]);
+
+});
+
+test('test raft init result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.raft.init.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.init.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test raft get_meta params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.raft.get_meta.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.get_meta.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test raft get_meta result codec', () => {
+
+  const data = {
+    block_interval: {Some: 10},
+    heartbeat_interval: 100,
+    election_timeout_min: 500,
+    election_timeout_max: 1000,
+  };;
+
+  const encoded = encode(data, callSchemaMap.raft.get_meta.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x010a000000000000006400000000000000f401000000000000e803000000000000'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.get_meta.result)
+  expect(decoded).toStrictEqual([data, 33]);
+
+});
+
+test('test raft get_admin params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.raft.get_admin.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.get_admin.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test raft get_admin result codec', () => {
+
+  const data = {
+    threshold: 1,
+    members: [
+      ["0x0102030405060708010203040506070801020304", 1],
+    ]
+  };
+
+  const encoded = encode(data, callSchemaMap.raft.get_admin.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('010000000450010203040506070801020304050607080102030401000000'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.get_admin.result)
+  expect(decoded).toStrictEqual([data, 30]);
+
+});
+
+test('test raft get_authorities params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.raft.get_authorities.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.get_authorities.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test raft get_authorities result codec', () => {
+
+  const data = {
+      members: [
+        "0x0102030405060708010203040506070801020304",
+      ],
+  };
+
+  const encoded = encode(data, callSchemaMap.raft.get_authorities.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x04500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.get_authorities.result)
+  expect(decoded).toStrictEqual([data, 22]);
+
+});
+
+test('test raft update_authorities params codec', () => {
+
+  const data = {
+    authorities: {
+      members: [
+        "0x0102030405060708010203040506070801020304",
+      ],
+    }
+  };
+
+  const encoded = encode(data, callSchemaMap.raft.update_authorities.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x04500102030405060708010203040506070801020304'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.update_authorities.params)
+  expect(decoded).toStrictEqual([data, 22]);
+
+});
+
+test('test raft update_authorities result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.raft.update_authorities.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.update_authorities.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test raft update_authorities_vote params codec', () => {
+
+  const data = {
+    proposal_id: 100,
+  };
+
+  const encoded = encode(data, callSchemaMap.raft.update_authorities_vote.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x64000000'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.update_authorities_vote.params)
+  expect(decoded).toStrictEqual([data, 4]);
+
+});
+
+test('test raft update_authorities_vote result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.raft.update_authorities_vote.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.raft.update_authorities_vote.result)
   expect(decoded).toStrictEqual([data, 0]);
 
 });

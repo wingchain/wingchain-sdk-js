@@ -127,14 +127,22 @@ class Network extends Module {
   }
 }
 
+class Consensus extends Module {
+  getState(...params: any) {
+    return this.call('getState', ...params);
+  }
+}
+
 export class Sdk {
   readonly chain: Chain;
   readonly txpool: TxPool;
   readonly network: Network;
+  readonly consensus: Consensus;
 
   constructor(client: IJsonRpcClient) {
     this.chain = new Chain(client, 'chain');
     this.txpool = new TxPool(client, 'txpool');
     this.network = new Network(client, 'network');
+    this.consensus = new Network(client, 'consensus');
   }
 }

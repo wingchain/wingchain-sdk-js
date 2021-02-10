@@ -65,7 +65,48 @@ test('test rpc chain getTransactionByHash', async () => {
           params:
             {
               block_interval: {Some: 3000},
+              admin: {
+                threshold: 1,
+                members: [
+                  ["0x3990497b31e549087fd736d11037993cbd415581", 1],
+                ]
+              },
               authority: '0x3990497b31e549087fd736d11037993cbd415581'
+            }
+        }
+    }
+  );
+});
+
+test('test rpc chain getTransactionByHash', async () => {
+  const client = new MockJsonRpcClient();
+  const sdk = new Sdk(client);
+  const tx = await sdk.chain.getTransactionByHash('0xfdc2c6b426550c7cf95780fd88ee911af59b9b64dc86f29d9c7ece05ab752bb5');
+  expect(tx).toStrictEqual({
+      hash:
+        '0xfdc2c6b426550c7cf95780fd88ee911af59b9b64dc86f29d9c7ece05ab752bb5',
+      witness: null,
+      call:
+        {
+          module: 'raft',
+          method: 'init',
+          params:
+            {
+              block_interval: {Some: 10},
+              heartbeat_interval: 100,
+              election_timeout_min: 500,
+              election_timeout_max: 1000,
+              admin: {
+                threshold: 1,
+                members: [
+                  ["0x0102030405060708010203040506070801020304", 1],
+                ]
+              },
+              authorities: {
+                members: [
+                  "0x0102030405060708010203040506070801020304",
+                ],
+              }
             }
         }
     }
@@ -280,7 +321,20 @@ class MockJsonRpcClient implements IJsonRpcClient {
               module: 'poa',
               method: 'init',
               params:
-                '0x01b80b000000000000503990497b31e549087fd736d11037993cbd415581'
+                '0x01b80b0000000000000100000004503990497b31e549087fd736d11037993cbd41558101000000503990497b31e549087fd736d11037993cbd415581'
+            }
+        }
+      } else if (params[0] === '0xfdc2c6b426550c7cf95780fd88ee911af59b9b64dc86f29d9c7ece05ab752bb5') {
+        return {
+          hash:
+            '0xfdc2c6b426550c7cf95780fd88ee911af59b9b64dc86f29d9c7ece05ab752bb5',
+          witness: null,
+          call:
+            {
+              module: 'raft',
+              method: 'init',
+              params:
+                '0x010a000000000000006400000000000000f401000000000000e80300000000000001000000045001020304050607080102030405060708010203040100000004500102030405060708010203040506070801020304'
             }
         }
       } else if (params[0] === '0x64ffe02ff98d4162fac870aa488e64d1b7a0f2396f95fe49473799ee1f95b266') {

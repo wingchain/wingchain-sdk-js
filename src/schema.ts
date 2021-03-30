@@ -24,6 +24,19 @@ const authoritiesSchema = {
   },
 };
 
+const weightAuthoritiesSchema = {
+  type: 'struct',
+  fields: {
+    members: {
+      type: 'vec',
+      element: {
+        type: 'tuple',
+        elements: [{ type: 'hex' }, { type: 'u32' }],
+      },
+    },
+  },
+};
+
 export const callSchemaMap = {
   balance: {
     init: {
@@ -469,6 +482,100 @@ export const callSchemaMap = {
         type: 'struct',
         fields: {
           authorities: authoritiesSchema,
+        },
+      },
+      result: {
+        type: 'unit',
+      },
+    },
+    update_authorities_vote: {
+      params: {
+        type: 'struct',
+        fields: {
+          proposal_id: { type: 'u32' },
+        },
+      },
+      result: {
+        type: 'unit',
+      },
+    },
+  },
+  hotstuff: {
+    init: {
+      params: {
+        type: 'struct',
+        fields: {
+          block_interval: {
+            type: 'enum',
+            variants: { Some: { index: 1, schema: { type: 'u64' } }, None: { index: 0, schema: { type: 'unit' } } },
+          },
+          view_timeout: {
+            type: 'u64',
+          },
+          admin: adminSchema,
+          authorities: weightAuthoritiesSchema,
+        },
+      },
+      result: {
+        type: 'unit',
+      },
+    },
+    get_meta: {
+      params: {
+        type: 'unit',
+      },
+      result: {
+        type: 'struct',
+        fields: {
+          block_interval: {
+            type: 'enum',
+            variants: { Some: { index: 1, schema: { type: 'u64' } }, None: { index: 0, schema: { type: 'unit' } } },
+          },
+          view_timeout: {
+            type: 'u64',
+          },
+        },
+      },
+    },
+    get_admin: {
+      params: {
+        type: 'unit',
+      },
+      result: adminSchema,
+    },
+    get_authorities: {
+      params: {
+        type: 'unit',
+      },
+      result: weightAuthoritiesSchema,
+    },
+    update_admin: {
+      params: {
+        type: 'struct',
+        fields: {
+          admin: adminSchema,
+        },
+      },
+      result: {
+        type: 'unit',
+      },
+    },
+    update_admin_vote: {
+      params: {
+        type: 'struct',
+        fields: {
+          proposal_id: { type: 'u32' },
+        },
+      },
+      result: {
+        type: 'unit',
+      },
+    },
+    update_authorities: {
+      params: {
+        type: 'struct',
+        fields: {
+          authorities: weightAuthoritiesSchema,
         },
       },
       result: {

@@ -771,6 +771,196 @@ test('test raft update_authorities_vote result codec', () => {
 
 });
 
+test('test hotstuff init params codec', () => {
+
+  const data = {
+    block_interval: {Some: 10},
+    view_timeout: 1000,
+    admin: {
+      threshold: 1,
+      members: [
+        ["0x0102030405060708010203040506070801020304", 1],
+      ]
+    },
+    authorities: {
+      members: [
+        ["0x0102030405060708010203040506070801020304", 1],
+      ],
+    }
+  };
+
+  const encoded = encode(data, callSchemaMap.hotstuff.init.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x010a00000000000000e8030000000000000100000004500102030405060708010203040506070801020304010000000450010203040506070801020304050607080102030401000000'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.init.params)
+  expect(decoded).toStrictEqual([data, 73]);
+
+});
+
+test('test hotstuff init result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.hotstuff.init.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.init.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test hotstuff get_meta params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.hotstuff.get_meta.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.get_meta.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test hotstuff get_meta result codec', () => {
+
+  const data = {
+    block_interval: {Some: 10},
+    view_timeout: 1000,
+  };;
+
+  const encoded = encode(data, callSchemaMap.hotstuff.get_meta.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x010a00000000000000e803000000000000'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.get_meta.result)
+  expect(decoded).toStrictEqual([data, 17]);
+
+});
+
+test('test hotstuff get_admin params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.hotstuff.get_admin.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.get_admin.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test hotstuff get_admin result codec', () => {
+
+  const data = {
+    threshold: 1,
+    members: [
+      ["0x0102030405060708010203040506070801020304", 1],
+    ]
+  };
+
+  const encoded = encode(data, callSchemaMap.hotstuff.get_admin.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('010000000450010203040506070801020304050607080102030401000000'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.get_admin.result)
+  expect(decoded).toStrictEqual([data, 30]);
+
+});
+
+test('test hotstuff get_authorities params codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.hotstuff.get_authorities.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.get_authorities.params)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test hotstuff get_authorities result codec', () => {
+
+  const data = {
+    members: [
+      ["0x0102030405060708010203040506070801020304", 1],
+    ],
+  };
+
+  const encoded = encode(data, callSchemaMap.hotstuff.get_authorities.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x0450010203040506070801020304050607080102030401000000'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.get_authorities.result)
+  expect(decoded).toStrictEqual([data, 26]);
+
+});
+
+test('test hotstuff update_authorities params codec', () => {
+
+  const data = {
+    authorities: {
+      members: [
+        ["0x0102030405060708010203040506070801020304", 1],
+      ],
+    }
+  };
+
+  const encoded = encode(data, callSchemaMap.hotstuff.update_authorities.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x0450010203040506070801020304050607080102030401000000'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.update_authorities.params)
+  expect(decoded).toStrictEqual([data, 26]);
+
+});
+
+test('test hotstuff update_authorities result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.hotstuff.update_authorities.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.update_authorities.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
+test('test hotstuff update_authorities_vote params codec', () => {
+
+  const data = {
+    proposal_id: 100,
+  };
+
+  const encoded = encode(data, callSchemaMap.hotstuff.update_authorities_vote.params)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x64000000'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.update_authorities_vote.params)
+  expect(decoded).toStrictEqual([data, 4]);
+
+});
+
+test('test hotstuff update_authorities_vote result codec', () => {
+
+  const data = null;
+
+  const encoded = encode(data, callSchemaMap.hotstuff.update_authorities_vote.result)
+
+  expect(encoded).toStrictEqual(hexToU8a('0x'));
+
+  const decoded = decode(encoded, callSchemaMap.hotstuff.update_authorities_vote.result)
+  expect(decoded).toStrictEqual([data, 0]);
+
+});
+
 test('test system init params codec', () => {
 
   const data = {

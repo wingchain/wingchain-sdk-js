@@ -116,6 +116,39 @@ test('test rpc chain getTransactionByHash', async () => {
 test('test rpc chain getTransactionByHash', async () => {
   const client = new MockJsonRpcClient();
   const sdk = new Sdk(client);
+  const tx = await sdk.chain.getTransactionByHash('0xfdc2c6b426550c7cf95780fd88ee911af59b9b64dc86f29d9c7ece05ab752bb6');
+  expect(tx).toStrictEqual({
+      hash:
+        '0xfdc2c6b426550c7cf95780fd88ee911af59b9b64dc86f29d9c7ece05ab752bb6',
+      witness: null,
+      call:
+        {
+          module: 'hotstuff',
+          method: 'init',
+          params:
+            {
+              block_interval: {Some: 10},
+              view_timeout: 1000,
+              admin: {
+                threshold: 1,
+                members: [
+                  ["0x0102030405060708010203040506070801020304", 1],
+                ]
+              },
+              authorities: {
+                members: [
+                  ["0x0102030405060708010203040506070801020304", 1],
+                ]
+              }
+            }
+        }
+    }
+  );
+});
+
+test('test rpc chain getTransactionByHash', async () => {
+  const client = new MockJsonRpcClient();
+  const sdk = new Sdk(client);
   const tx = await sdk.chain.getTransactionByHash('0x64ffe02ff98d4162fac870aa488e64d1b7a0f2396f95fe49473799ee1f95b266');
   expect(tx).toStrictEqual({
       hash:
@@ -335,6 +368,19 @@ class MockJsonRpcClient implements IJsonRpcClient {
               method: 'init',
               params:
                 '0x010a000000000000006400000000000000f401000000000000e80300000000000001000000045001020304050607080102030405060708010203040100000004500102030405060708010203040506070801020304'
+            }
+        }
+      } else if (params[0] === '0xfdc2c6b426550c7cf95780fd88ee911af59b9b64dc86f29d9c7ece05ab752bb6') {
+        return {
+          hash:
+            '0xfdc2c6b426550c7cf95780fd88ee911af59b9b64dc86f29d9c7ece05ab752bb6',
+          witness: null,
+          call:
+            {
+              module: 'hotstuff',
+              method: 'init',
+              params:
+                '0x010a00000000000000e8030000000000000100000004500102030405060708010203040506070801020304010000000450010203040506070801020304050607080102030401000000'
             }
         }
       } else if (params[0] === '0x64ffe02ff98d4162fac870aa488e64d1b7a0f2396f95fe49473799ee1f95b266') {
